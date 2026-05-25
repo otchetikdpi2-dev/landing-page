@@ -1,5 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+
+// Countdown Timer Component
+function Countdown({ targetDate }) {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  function calculateTimeLeft() {
+    const difference = +new Date(targetDate) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  const timerComponents = [];
+
+  Object.keys(timeLeft).forEach((interval) => {
+    if (!timeLeft[interval] && timeLeft[interval] !== 0) {
+      return;
+    }
+
+    timerComponents.push(
+      <div className="countdown-item" key={interval}>
+        <span className="countdown-value">{timeLeft[interval]}</span>
+        <span className="countdown-label">{interval}</span>
+      </div>
+    );
+  });
+
+  return (
+    <div className="countdown">
+      {timerComponents.length ? timerComponents : <span className="event-started">Event Started!</span>}
+    </div>
+  );
+}
 
 function Hero() {
   const scrollToRegister = () => {
@@ -9,8 +59,9 @@ function Hero() {
   return (
     <section id="hero" className="hero">
       <div className="container">
-        <h1 className="glitch" data-text="TechFuture Summit 2026">TechFuture Summit 2026</h1>
-        <p className="subtitle">October 15-16, 2026 • San Francisco, CA</p>
+        <h1>AI in Business Summit 2026</h1>
+        <p className="subtitle">March 15, 2026 / EPAM Office, Minsk</p>
+        <Countdown targetDate="2026-03-15T09:00:00" />
         <button onClick={scrollToRegister} className="btn-primary">Register Now</button>
       </div>
     </section>
@@ -23,8 +74,8 @@ function About() {
       <div className="container">
         <h2>About the Event</h2>
         <div className="about-content">
-          <p>Welcome to TechFuture Summit, the premier gathering for innovators, developers, and tech enthusiasts. We're bringing together the brightest minds to discuss the technologies shaping our tomorrow.</p>
-          <p>Join us for two days of deep-dive workshops, inspiring keynotes, and unparalleled networking opportunities. Whether you're a seasoned professional or just starting your journey, there's something here to elevate your skills and vision.</p>
+          <p>The AI in Business Summit 2026 is the premier gathering for executives and tech leaders exploring the transformative power of Artificial Intelligence in the corporate world.</p>
+          <p>Join us for a day of strategic insights, practical case studies, and high-level networking to understand how AI is reshaping industries and driving competitive advantage in 2026 and beyond.</p>
         </div>
       </div>
     </section>
@@ -33,11 +84,11 @@ function About() {
 
 function Program() {
   const schedule = [
-    { time: "09:00 AM", title: "Registration & Breakfast" },
-    { time: "10:00 AM", title: "Keynote: The Future of AI" },
-    { time: "11:30 AM", title: "Workshop: Building Scalable Systems" },
-    { time: "01:00 PM", title: "Lunch Break & Networking" },
-    { time: "02:30 PM", title: "Panel: Cybersecurity in 2026" },
+    { time: "09:00 AM", title: "Opening Keynote: The AI-First Enterprise" },
+    { time: "10:30 AM", title: "Panel: Ethical Governance in Automated Decision Making" },
+    { time: "12:00 PM", title: "Executive Networking Lunch" },
+    { time: "01:30 PM", title: "Case Study: Scaling Generative AI across Global Teams" },
+    { time: "03:00 PM", title: "Workshop: Building Your 2027 AI Roadmap" },
   ];
 
   return (
@@ -58,11 +109,41 @@ function Program() {
 }
 
 function Speakers() {
+  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+
   const speakers = [
-    { name: "Dr. Ada Lovelace", title: "Chief AI Scientist", company: "NextGen Tech", avatar: "https://i.pravatar.cc/150?img=47" },
-    { name: "Alan Turing", title: "Head of Computing", company: "Logic Corp", avatar: "https://i.pravatar.cc/150?img=11" },
-    { name: "Grace Hopper", title: "VP of Engineering", company: "Compiler Inc.", avatar: "https://i.pravatar.cc/150?img=5" },
-    { name: "Linus Torvalds", title: "Open Source Advocate", company: "Kernel Systems", avatar: "https://i.pravatar.cc/150?img=33" },
+    { 
+      name: "Elena Petrova", 
+      title: "Chief Innovation Officer", 
+      company: "DataStream AI", 
+      avatar: "https://i.pravatar.cc/150?img=47",
+      bio: "Elena is a pioneer in implementing large-scale AI solutions for Fortune 500 companies. She has over 15 years of experience in data strategy and digital transformation.",
+      talks: ["The AI-First Enterprise", "Scaling AI Teams"]
+    },
+    { 
+      name: "Dr. Marc Chen", 
+      title: "Head of AI Research", 
+      company: "FutureLogic", 
+      avatar: "https://i.pravatar.cc/150?img=11",
+      bio: "Dr. Chen leads cutting-edge research in neural network architectures. His work focuses on making AI models more efficient and interpretable for business applications.",
+      talks: ["The Future of Neural Networks", "AI Efficiency Workshop"]
+    },
+    { 
+      name: "Sarah Jenkins", 
+      title: "VP of Digital Strategy", 
+      company: "Global Tech Solutions", 
+      avatar: "https://i.pravatar.cc/150?img=5",
+      bio: "Sarah specializes in the intersection of business value and emerging technologies. She has successfully led multiple AI-driven product launches across three continents.",
+      talks: ["Building Your 2027 AI Roadmap", "AI Product Strategy"]
+    },
+    { 
+      name: "Alex Volkov", 
+      title: "Lead Data Ethicist", 
+      company: "Ethos AI", 
+      avatar: "https://i.pravatar.cc/150?img=33",
+      bio: "Alex is a renowned expert in AI ethics and governance. He advises governments and corporations on building responsible and transparent automated systems.",
+      talks: ["Ethical Governance", "Responsible AI Frameworks"]
+    },
   ];
 
   return (
@@ -71,25 +152,52 @@ function Speakers() {
         <h2>Featured Speakers</h2>
         <div className="speaker-grid">
           {speakers.map((s, index) => (
-            <div key={index} className="speaker-card">
+            <div key={index} className="speaker-card" onClick={() => setSelectedSpeaker(s)}>
               <img src={s.avatar} alt={s.name} className="avatar" />
               <h3>{s.name}</h3>
               <p className="title">{s.title}</p>
               <p className="company">{s.company}</p>
+              <div className="social-icons">
+                <a href="#linkedin" onClick={(e) => e.stopPropagation()}>LinkedIn</a>
+                <a href="#twitter" onClick={(e) => e.stopPropagation()}>Twitter</a>
+              </div>
+              <div className="speaker-bio-overlay">
+                <p>{s.bio.substring(0, 100)}...</p>
+                <span>Click for more</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      {selectedSpeaker && (
+        <div className="modal-overlay" onClick={() => setSelectedSpeaker(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelectedSpeaker(null)}>&times;</button>
+            <div className="modal-body">
+              <h3>{selectedSpeaker.name}</h3>
+              <p className="title">{selectedSpeaker.title} @ {selectedSpeaker.company}</p>
+              <p className="bio">{selectedSpeaker.bio}</p>
+              <hr style={{ margin: '20px 0', border: '0', borderTop: '1px solid #eee' }} />
+              <h4>Talks at this Summit:</h4>
+              <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+                {selectedSpeaker.talks.map((talk, i) => <li key={i}>{talk}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
 
 function FAQ() {
   const faqs = [
-    { q: "Do I need prior experience to attend?", a: "While some workshops are advanced, we have tracks designed for all skill levels, including beginners." },
-    { q: "Is lunch provided?", a: "Yes, catered lunch and refreshments are included with your ticket on both days." },
-    { q: "Can I get a refund if I can't make it?", a: "Full refunds are available up to 14 days before the event." },
-    { q: "Are the sessions recorded?", a: "Yes, all keynotes and panel discussions will be recorded and shared with attendees after the event." }
+    { q: "Who should attend this summit?", a: "The summit is designed for C-level executives, department heads, and tech leads who are responsible for AI strategy and implementation in their organizations." },
+    { q: "Will sessions be available on-demand?", a: "Yes, all registered attendees will receive exclusive access to the session recordings and presentation decks one week after the event." },
+    { q: "Is there a group discount for teams?", a: "Absolutely. We offer a 20% discount for registrations of 5 or more people from the same organization. Please contact our support team for a promo code." },
+    { q: "What is the dress code for the event?", a: "The dress code for the summit is business casual. We recommend comfortable attire suitable for a professional conference environment." },
+    { q: "How can I apply to be a sponsor?", a: "We have various sponsorship packages available. Please visit our 'Sponsors' page or reach out to our partnership team at partners@aisummit.com." }
   ];
 
   const [openIndex, setOpenIndex] = useState(null);
@@ -140,27 +248,27 @@ function Registration() {
   return (
     <section id="registration" className="registration">
       <div className="container">
-        <h2>Secure Your Spot</h2>
+        <h2>Reserve Your Executive Pass</h2>
         {submitted ? (
           <div className="success-message">
             <h3>🎉 You're registered!</h3>
-            <p>Check your email for further details.</p>
+            <p>Welcome to the AI in Business Summit 2026. A confirmation email with event details has been sent to your inbox.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="reg-form">
             <div className="form-group">
               <label htmlFor="name">Full Name *</label>
-              <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} />
+              <input type="text" id="name" name="name" placeholder="Enter your full name" required value={formData.name} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email Address *</label>
-              <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} />
+              <label htmlFor="email">Work Email *</label>
+              <input type="email" id="email" name="email" placeholder="email@company.com" required value={formData.email} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="company">Company</label>
-              <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} />
+              <label htmlFor="company">Company Name</label>
+              <input type="text" id="company" name="company" placeholder="Your organization" value={formData.company} onChange={handleChange} />
             </div>
-            <button type="submit" className="btn-primary">Submit Registration</button>
+            <button type="submit" className="btn-primary">Complete Registration</button>
           </form>
         )}
       </div>
@@ -178,7 +286,7 @@ function App() {
       <FAQ />
       <Registration />
       <footer>
-        <p>&copy; 2026 TechFuture Summit. All rights reserved.</p>
+        <p>&copy; 2026 AI in Business Summit. All rights reserved.</p>
       </footer>
     </div>
   );
