@@ -57,3 +57,4 @@ I want to build a landing page for an event — with info about the event, sched
 ---
 
 Both options produce a working landing page. Try whichever feels more comfortable — or try both!
+
