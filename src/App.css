@@ -1,11 +1,304 @@
+/* Theme A — Tech Conference */
+:root {
+  --bg-color: #0d0e15;
+  --bg-alt: #161824;
+  --text-primary: #f0f0f0;
+  --text-secondary: #a0a0b0;
+  --neon-cyan: #00f5d4;
+  --neon-purple: #7b2ff7;
+  --gradient: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+}
+
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #333;
-  background: #fff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 80px 0;
+}
+
+.alt-bg {
+  background-color: var(--bg-alt);
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-align: center;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #1a103c 0%, var(--bg-color) 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-purple);
+}
+
+.hero .subtitle {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 15px rgba(123, 47, 247, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 245, 212, 0.6);
+}
+
+/* About Section */
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.about-content p {
+  margin-bottom: 20px;
+}
+
+/* Program Section */
+.timeline {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline-item {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border-left: 4px solid var(--neon-cyan);
+}
+
+.timeline-item .time {
+  padding: 20px;
+  background: rgba(0, 245, 212, 0.1);
+  font-weight: bold;
+  color: var(--neon-cyan);
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item .content {
+  padding: 20px;
+  font-size: 1.1rem;
+}
+
+/* Speakers Section */
+.speaker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.speaker-card {
+  background: var(--bg-alt);
+  border: 1px solid rgba(123, 47, 247, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.speaker-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--neon-cyan);
+}
+
+.speaker-card .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 3px solid var(--neon-purple);
+  object-fit: cover;
+}
+
+.speaker-card h3 {
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.speaker-card .title {
+  color: var(--neon-cyan);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.speaker-card .company {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* FAQ Section */
+.accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  margin-bottom: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s;
+}
+
+.accordion-header:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.accordion-header .icon {
+  color: var(--neon-cyan);
+  font-size: 1.5rem;
+}
+
+.accordion-content {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-secondary);
+}
+
+/* Registration Section */
+.reg-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--bg-alt);
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid rgba(123, 47, 247, 0.3);
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: var(--neon-cyan);
+}
+
+.reg-form button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.success-message {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 50px;
+  background: rgba(0, 245, 212, 0.1);
+  border: 2px solid var(--neon-cyan);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.success-message h3 {
+  color: var(--neon-cyan);
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero .subtitle {
+    font-size: 1.2rem;
+  }
+  .timeline-item {
+    flex-direction: column;
+  }
+  .timeline-item .time {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
